@@ -3,6 +3,9 @@ import { Archivo, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import Cursor from "@/components/Cursor";
+import ScrollFx from "@/components/ScrollFx";
+import IntroLoader from "@/components/IntroLoader";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -37,6 +40,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <Cursor />
+        <ScrollFx />
+        <IntroLoader />
       </body>
     </html>
   );

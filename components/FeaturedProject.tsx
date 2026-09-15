@@ -1,8 +1,9 @@
 import { project } from "@/content/portfolio";
 import SectionLabel from "@/components/SectionLabel";
-import { DetailCrop, FullScreenshot, imageCaptions } from "@/components/ProjectVisual";
-import Reveal from "@/components/Reveal";
+import WorkGallery from "@/components/WorkGallery";
+import SplitWords from "@/components/SplitWords";
 
+/** Pin targets are plain elements — the ScrollFx timeline owns their motion, so no Reveal wraps them. */
 export default function FeaturedProject() {
   return (
     <section
@@ -10,43 +11,45 @@ export default function FeaturedProject() {
       aria-labelledby="work-heading"
       className="scroll-mt-24 border-b border-ink/15"
     >
-      <div className="mx-auto max-w-[1280px] px-5 py-10 md:px-12 md:py-16 lg:px-16">
+      <div
+        data-work-stage
+        className="relative z-0 mx-auto max-w-[1280px] px-5 py-10 md:px-12 md:py-16 lg:px-16"
+      >
         {/* Heading sits tight against the work so they read as one group */}
-        <Reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-3 border-t border-ink/15 pt-6">
+        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-3 border-t border-ink/15 pt-6">
           <div>
-            <SectionLabel index="03" title="Selected Work" />
-            <h2 id="work-heading" className="display-section mt-3 uppercase">
-              Selected
+            <SectionLabel index="01" title="Selected Work" />
+            <h2
+              id="work-heading"
+              data-split
+              data-split-pinned
+              className="display-section mt-3 uppercase"
+            >
+              <SplitWords text="Selected" />
               <br />
-              Work.
+              <SplitWords text="Work." />
             </h2>
           </div>
           <p className="label-latin pb-3 text-muted uppercase">
-            01 / {project.name} — {project.tags[1]}
+            01 / {project.name}
           </p>
-        </Reveal>
+        </div>
+
 
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* พื้น sage เป็นพื้นที่แสดงภาพขนาดใหญ่: ภาพเต็มหนึ่งภาพคู่กับภาพขยาย */}
-          <Reveal className="border border-ink/10 bg-surface p-4 md:p-6 lg:col-span-7">
-            <figure className="grid grid-cols-1 gap-6 sm:grid-cols-[minmax(0,42%)_1fr]">
-              <div>
-                <FullScreenshot />
-                <figcaption className="mt-3 text-sm text-muted">
-                  {imageCaptions.full}
-                </figcaption>
-              </div>
-              <div>
-                <DetailCrop which="dayNav" />
-                <p className="mt-3 text-sm text-muted">{imageCaptions.dayNav}</p>
-                <p className="mt-4 border-t border-ink/20 pt-3 text-sm text-muted">
-                  ภาพขยายทั้งสองเป็น crop จากหน้าจอเดียวกัน ไม่ใช่หน้าจอคนละอัน
-                </p>
-              </div>
-            </figure>
-          </Reveal>
+          <a
+            href={project.caseStudyHref}
+            className="project-card group block lg:col-span-7"
+            aria-label={`อ่าน Case Study: ${project.name}`}
+          >
+            <WorkGallery mode="scrub" />
+            <span className="project-card-caption label-latin mt-3 flex items-center justify-between uppercase">
+              View Case Study
+              <span aria-hidden="true">→</span>
+            </span>
+          </a>
 
-          <Reveal className="lg:col-span-5">
+          <div data-work-info className="lg:col-span-5">
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               {project.tags.map((tag) => (
                 <p key={tag} className="label-latin text-accent uppercase">
@@ -70,6 +73,19 @@ export default function FeaturedProject() {
                 <dt className="text-sm font-semibold text-muted">เทคโนโลยี</dt>
                 <dd className="font-medium">{project.tech.join(" · ")}</dd>
               </div>
+              <div className="grid grid-cols-[6.5rem_1fr] gap-4 border-t border-ink/20 py-3">
+                <dt className="text-sm font-semibold text-muted">เว็บไซต์</dt>
+                <dd>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="break-all font-medium text-accent underline-offset-4 hover:underline"
+                  >
+                    my-schedule-eosin.vercel.app
+                  </a>
+                </dd>
+              </div>
               <div className="grid grid-cols-[6.5rem_1fr] gap-4 border-y border-ink/20 py-3">
                 <dt className="text-sm font-semibold text-muted">ซอร์สโค้ด</dt>
                 <dd>
@@ -84,15 +100,26 @@ export default function FeaturedProject() {
                 </dd>
               </div>
             </dl>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href={project.caseStudyHref}
                 className="press inline-flex min-h-[44px] items-center bg-ink px-5 font-medium text-background hover:bg-accent"
               >
-                อ่าน Case Study →
+                อ่าน Case Study{" "}
+                <span aria-hidden="true" className="nudge-r">
+                  →
+                </span>
+              </a>
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="press inline-flex min-h-[44px] items-center border border-ink/30 px-5 font-medium hover:border-ink hover:bg-surface"
+              >
+                เปิดเว็บไซต์ <span aria-hidden="true" className="nudge-r">↗</span>
               </a>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

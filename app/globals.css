@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f5f4ef;
-  --color-surface: #e6ebe4;
-  --color-ink: #242824;
-  --color-muted: #60685f;
-  --color-accent: #426b56;
+  --color-background: #f8f8f8;
+  --color-surface: #f8f8f8;
+  --color-ink: #1a1a1a;
+  --color-muted: #767676;
+  --color-accent: #ff4520;
+  --color-boundary: #1f1f1f;
 
   --font-sans: "Archivo", "Noto Sans Thai", Helvetica, Arial, sans-serif;
 }
@@ -32,7 +33,7 @@ body {
   outline-offset: 3px;
 }
 
-/* Dark surfaces take a light ring: accent green is only 2.47:1 against ink. */
+/* Dark surfaces take a light ring. */
 .on-ink {
   --focus-ring: var(--color-background);
 }
@@ -107,27 +108,198 @@ body {
   scale: 0.96;
 }
 
+
+/* Project artwork is a clear editorial gateway, not a decorative dead end. */
+.project-card {
+  color: var(--color-ink);
+  transition: color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.project-card > div {
+  overflow: hidden;
+  transition: border-color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.project-card-caption {
+  color: var(--color-muted);
+  transition: color 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.project-card-caption span {
+  transition: translate 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (hover: hover) {
+  .project-card:hover > div,
+  .project-card:focus-visible > div {
+    border-color: var(--color-accent);
+  }
+
+  .project-card:hover .project-card-caption,
+  .project-card:focus-visible .project-card-caption {
+    color: var(--color-accent);
+  }
+
+  .project-card:hover .project-card-caption span,
+  .project-card:focus-visible .project-card-caption span {
+    translate: 4px 0;
+  }
+}
+
 /* Image outline: pure black on these light panels — a tinted neutral picks up the surface and reads as dirt. */
 .image-outline {
   outline: 1px solid oklch(0 0 0 / 0.1);
 }
 
+
+/* Masked display words: scrubbed open through the scroll, closing again on the way back. */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  vertical-align: bottom;
+}
+
+.split-word {
+  display: inline-block;
+}
+
+/* Failsafe: if JS never takes over (broken hydration, blocked chunk), the content shows itself.
+   JS cancels this the moment it initialises, by adding `.fx-ready` so the rule stops matching. */
+@keyframes fx-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 /* Entrance state applies before first paint without touching the DOM, so nothing flashes visible and then hides.
    Scoped to scripting-enabled + no motion preference so content is never hidden when it cannot be revealed. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  [data-reveal] {
+  [data-reveal]:not(.fx-ready) {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(20px);
   }
 
-  /* Fallback: if the GSAP chunk never loads, content appears instead of staying hidden. */
   [data-reveal].is-revealed {
     opacity: 1;
     transform: none;
   }
+
+  /* Clip-wipe image entrances, scrubbed in both directions. */
+  [data-wipe]:not(.fx-ready) {
+    clip-path: inset(14% 10% 14% 10%);
+  }
+
+  [data-wipe].is-shown {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Opacity only: a percentage transform here would be parsed by GSAP as a static pixel
+     offset and baked into every later yPercent tween, leaving the words stuck. */
+  [data-word]:not(.fx-ready) {
+    opacity: 0;
+  }
+
+  [data-word].is-shown {
+    opacity: 1;
+  }
+
+  /* Work sequence. Scoped under [data-work-stage] so the Case Study gallery is never pre-hidden. */
+  [data-work-stage] [data-work-shot]:not(.fx-ready),
+  [data-work-stage] [data-work-info] > *:not(.fx-ready) {
+    opacity: 0;
+  }
+
+  [data-work-stage] [data-work-detail]:not(.fx-ready) {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  [data-work-stage] [data-work-shot].is-shown,
+  [data-work-stage] [data-work-info] > *.is-shown {
+    opacity: 1;
+  }
+
+  [data-work-stage] [data-work-detail].is-shown {
+    clip-path: inset(0 0 0 0);
+  }
+
+  :is(
+      [data-reveal],
+      [data-wipe],
+      [data-word],
+      [data-work-stage] [data-work-shot],
+      [data-work-stage] [data-work-detail]
+    ):not(.fx-ready) {
+    animation: fx-failsafe 0.01s linear 3s forwards;
+  }
+}
+
+/* Moonshot-style cursor: white shapes that invert against any surface via difference blend.
+   Nodes stay display:none until JS activates them on a fine-pointer device. */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  display: none;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: #fff;
+  mix-blend-mode: difference;
+  opacity: 0;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.has-custom-cursor .cursor-dot,
+.has-custom-cursor .cursor-ring {
+  display: block;
+}
+
+@media (pointer: fine) {
+  .has-custom-cursor,
+  .has-custom-cursor a,
+  .has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+/* Arrow nudge on horizontal CTA links: color and underline stay the primary cue. */
+.nudge-r,
+.nudge-l {
+  display: inline-block;
+  transition-property: translate;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+a:hover .nudge-r,
+a:focus-visible .nudge-r {
+  translate: 4px 0;
+}
+
+a:hover .nudge-l,
+a:focus-visible .nudge-l {
+  translate: -4px 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   html {
     scroll-behavior: auto;
   }
@@ -142,4 +314,19 @@ body {
   .press:active {
     scale: 1;
   }
+}
+/* Navbar reading progress: the black fill traverses beneath foreground text, which inverts via difference. */
+.scroll-progress {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+.nav-foreground {
+  color: var(--color-background);
+  mix-blend-mode: difference;
 }

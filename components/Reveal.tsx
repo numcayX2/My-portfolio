@@ -10,9 +10,12 @@ import { useEffect, useRef, type ReactNode } from "react";
 export default function Reveal({
   children,
   className = "",
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
+  /** Stagger offset in seconds when several reveals share one trigger zone. */
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,15 +36,18 @@ export default function Reveal({
         if (cancelled) return;
         window.clearTimeout(fallback);
         gsap.registerPlugin(ScrollTrigger);
+        // Cancels the CSS failsafe for this element; GSAP's own from-state takes over.
+        el.classList.add("fx-ready");
         const ctx = gsap.context(() => {
           gsap.fromTo(
             el,
-            { opacity: 0, y: 14 },
+            { opacity: 0, y: 20 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.6,
-              ease: "power2.out",
+              duration: 0.8,
+              ease: "power3.out",
+              delay,
               scrollTrigger: { trigger: el, start: "top 88%", once: true },
             },
           );
@@ -57,7 +63,7 @@ export default function Reveal({
       window.clearTimeout(fallback);
       revert?.();
     };
-  }, []);
+  }, [delay]);
 
   return (
     <div ref={ref} data-reveal className={className}>

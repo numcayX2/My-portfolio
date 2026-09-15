@@ -1,51 +1,93 @@
 export const profile = {
   wordmark: "Nam.",
   fullName: "สุธารชัย ประดิษฐกูล",
-  studentLine: "นักศึกษาวิทยาการคอมพิวเตอร์ ปี 3 · มหาวิทยาลัยแม่โจ้",
-  targetLine: "มองหาโอกาสฝึกงานด้าน Data Science และ UX/UI Development",
+  studentLine: "นักศึกษาชั้นปีที่ 3 · วิทยาการคอมพิวเตอร์ · มหาวิทยาลัยแม่โจ้",
+  targetLine: "มองหาโอกาสฝึกงานตำแหน่ง UX/UI Developer หรือ Data Scientist",
   intro:
-    "สนใจการเชื่อมโยงข้อมูลกับประสบการณ์ผู้ใช้ และการสร้างเว็บที่ช่วยแก้ปัญหาในชีวิตประจำวัน",
+    "ผมเปลี่ยนข้อมูลที่ซับซ้อนให้เป็นประสบการณ์ดิจิทัลที่ชัดเจน ใช้งานง่าย และตอบโจทย์จริง — ตั้งแต่การวางโครงสร้างหน้าจอ ไปจนถึงการวิเคราะห์ข้อมูลเพื่อพัฒนาฟีเจอร์ที่มีความหมาย",
   about:
-    "ผมเป็นนักศึกษาวิทยาการคอมพิวเตอร์ที่สนใจทั้งข้อมูลและการออกแบบประสบการณ์ผู้ใช้ ชอบเริ่มต้นจากปัญหาที่พบในการใช้งานจริง แล้วกำหนดแนวทางและโครงสร้างหน้าจอเพื่อพัฒนาเป็นเครื่องมือที่ใช้งานได้ โดยใช้ AI ช่วยในกระบวนการพัฒนา",
+    "ผมเป็นนักศึกษาวิทยาการคอมพิวเตอร์ที่สนใจการเชื่อมโยงระหว่าง Data และ User Experience มุ่งสร้างเว็บแอปที่ใช้งานง่าย พร้อมนำข้อมูลมาวิเคราะห์เพื่อพัฒนาฟีเจอร์และแก้ปัญหาที่ตอบโจทย์ผู้ใช้อย่างแท้จริง",
+  approach:
+    "พัฒนาโปรเจกต์ระดับ Web, Mobile และ Data Script โดยใช้ AI เพื่อเร่งการทำต้นแบบ แต่ยังควบคุม Requirement โครงสร้างระบบ และการทดสอบจริงด้วยตนเอง พร้อมสื่อสารขอบเขตของงานตามข้อเท็จจริง",
   education: [
     "มหาวิทยาลัยแม่โจ้",
     "คณะวิทยาศาสตร์ สาขาวิทยาการคอมพิวเตอร์",
     "กำลังศึกษาชั้นปีที่ 3",
   ],
-  email: "sutarnchai.paditgool@gmail.com",
+  interests: [
+    "วิ่งสะสมระยะทางและฝึก Zone 2",
+    "Specialty coffee: Pour-over, Moka pot, Cold brew และมัทฉะ",
+    "เกมแนว Simulation / Strategy, Automation และแอนิเมชัน",
+  ],
+  email: "sutarnchai@gmail.com",
+  github: "https://github.com/numcayX2",
 } as const;
 
 export const navLinks = [
+  { href: "/#work", label: "ผลงาน" },
   { href: "/#about", label: "เกี่ยวกับ" },
   { href: "/#skills", label: "ทักษะ" },
-  { href: "/#work", label: "ผลงาน" },
+  { href: "/#certificates", label: "ใบรับรอง" },
   { href: "/#contact", label: "ติดต่อ" },
+] as const;
+
+export const certificates = [
+  {
+    title: "AI Literacy and Safety Modules · ความรู้รอบด้าน AI และความปลอดภัย",
+    issuer: "YOU by True · Google Gemini",
+    detail: "ผ่านการอบรมและสำเร็จหลักสูตร YOU by True & Gemini Academy",
+    date: "15 กันยายน 2569",
+    href: encodeURI(
+      "/certificates/Certificate Al Literacy and Safety Modules _ ความรู้รอบด้าน AI และความปลอดภัย.pdf",
+    ),
+  },
 ] as const;
 
 export const skillGroups = [
   {
     index: "01",
-    title: "Design direction",
-    scope: "Owned in My Schedule",
+    title: "Frontend & UX/UI",
+    scope: "Design and responsive interfaces",
     items: [
-      "กำหนด Requirements",
-      "Information Hierarchy",
-      "Layout",
-      "Visual Theme",
-      "ทดสอบใช้งานด้วยตนเอง",
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "GSAP",
+      "Responsive Web Design (Mobile-first)",
+      "Information Hierarchy & Chunking",
+      "User-Centered Design",
     ],
   },
   {
     index: "02",
-    title: "Development tools",
-    scope: "AI-assisted",
-    items: ["Next.js", "Tailwind CSS", "GSAP"],
+    title: "Backend & Data",
+    scope: "Systems, APIs and databases",
+    items: [
+      "NestJS",
+      "Node.js",
+      "RESTful APIs",
+      "Dual-token Authentication · RBAC",
+      "SQLite",
+      "MongoDB",
+      "Schema Design · Query · Data Relationships",
+    ],
   },
   {
     index: "03",
-    title: "ความสนใจ",
-    scope: "Interests",
-    items: ["Data Science", "UX/UI", "การใช้ AI ช่วยพัฒนา"],
+    title: "Programming & Tools",
+    scope: "Automation and delivery",
+    items: [
+      "Python",
+      "Data Extraction · Computer Vision เบื้องต้น",
+      "TypeScript",
+      "JavaScript",
+      "Kotlin",
+      "Android Development",
+      "Git",
+      "GitHub",
+      "Figma",
+      "AI-assisted Development",
+    ],
   },
 ] as const;
 
@@ -53,43 +95,74 @@ export const project = {
   name: "My Schedule",
   tagline: "รู้วิชา รู้ห้อง พร้อมไปเรียน",
   summary:
-    "เว็บตารางเรียนบนมือถือที่รวมเวลา วิชา และห้องเรียนไว้ในการ์ดเดียว ลดความจำเป็นในการจำรหัสและเลื่อนเทียบข้อมูล พร้อมทิศทางภาพที่ได้แรงบันดาลใจจาก Zenless Zone Zero",
-  role: "Project Owner & UI Design Direction",
-  tags: ["AI-assisted Development", "Personal Project"],
+    "เว็บตารางเรียน responsive ที่รวมเวลา วิชา และห้องเรียนไว้ในการ์ดเดียวบนมือถือ และจัดเป็น Weekly Routing grid บน desktop เพื่อลดการจำรหัสและเลื่อนเทียบข้อมูล",
+  role: "Project Owner & UI Design Direction — AI-assisted Development",
+  tags: ["Web Application", "Responsive · Mobile & Desktop"],
   tech: ["Next.js", "Tailwind CSS", "GSAP"],
   repo: "https://github.com/numcayX2/my-schedule",
+  liveUrl: "https://my-schedule-eosin.vercel.app/",
   caseStudyHref: "/work/my-schedule",
-  // ภาพทั้งหมดมาจาก screenshot เดียวกัน ภาพขยายเป็น crop ของภาพเต็ม ไม่ใช่หน้าจอคนละอัน
+  heroCaption: "My Schedule — ภาพเต็มหน้าจอตารางเรียนบนมือถือ",
   images: {
     full: {
       src: "/images/my-schedule-mobile.png",
       width: 634,
       height: 1270,
       alt: "ภาพหน้าจอ My Schedule แบบเต็ม: หัวเรื่อง CLASS/SCHEDULE แถบสถิติ และรายการคาบของวันจันทร์สามคาบ",
-      caption: "ภาพเต็มหน้าจอ — มุมมองวันจันทร์",
+      caption: "Mobile — มุมมองวันจันทร์",
     },
     cards: {
       src: "/images/my-schedule-cards.png",
       width: 634,
       height: 289,
       alt: "ภาพขยายการ์ดวิชาแรก: เวลา 10:00–12:00 รหัสวิชา 10301351 ชื่อวิชาวิทยาการข้อมูล และป้ายห้อง 105 กลุ่ม 2 บรรยาย LEC",
-      caption: "ภาพขยาย — การ์ดเดียวรวมเวลา รหัส ชื่อวิชา และห้อง",
+      caption: "Mobile — การ์ดวิชาเดียวรวมเวลา รหัส ชื่อวิชา และห้อง",
     },
-    dayNav: {
-      src: "/images/my-schedule-daynav.png",
-      width: 634,
-      height: 250,
-      alt: "ภาพขยายช่วงท้ายหน้าจอ: การ์ดวิชาภาษาอังกฤษเพื่อการศึกษา ห้อง 147 และแถบเลือกวัน จ. อ. พ. พฤ. ศ. ด้านล่างสุด",
-      caption: "ภาพขยาย — แถบเลือกวันอยู่ด้านล่างเพื่อให้ถึงด้วยนิ้วโป้ง",
+    desktop: {
+      src: "/images/my-schedule-desktop-preview.webp",
+      width: 1262,
+      height: 1200,
+      alt: "หน้าจอ desktop My Schedule: ส่วนหัว Class Schedule และตาราง Weekly Routing ที่แสดง 12 คาบเรียนตลอดสัปดาห์",
+      caption: "Desktop — Class Schedule และ Weekly Routing ทั้งสัปดาห์",
     },
   },
 } as const;
+
+export const otherProjects = [
+  {
+    index: "02",
+    name: "Ticket Management Platform",
+    type: "Full-stack Web Application",
+    role: "Full-stack Developer · Frontend, UI/UX & Authentication",
+    tech: "Next.js · React · NestJS · Tailwind CSS",
+    summary:
+      "แพลตฟอร์มบริหารจัดการตั๋วงานที่แบ่งสิทธิ์เข้าถึงข้อมูลตามบทบาทผู้ใช้ พร้อม Dual-token Authentication, Route Guards, การคัดกรองสถานะ และการแสดงผลข้อมูลแบบ responsive",
+  },
+  {
+    index: "03",
+    name: "NoteGPS",
+    type: "Android Mobile Application",
+    role: "Mobile Application Developer",
+    tech: "Kotlin · Android SDK · SQLite",
+    summary:
+      "แอปบันทึกข้อความพร้อมปักหมุดพิกัด เชื่อม GPS และ Location Services เพื่อเก็บ ค้นหา และจัดการข้อมูลแบบออฟไลน์ด้วยฐานข้อมูลภายในเครื่อง",
+  },
+  {
+    index: "04",
+    name: "Python Automation & Data Tracking",
+    type: "Data Scripting & Process Automation",
+    role: "Developer",
+    tech: "Python · Computer Vision libraries",
+    summary:
+      "สคริปต์ตรวจจับเงื่อนไขและดึงสถานะเชิงสถิติผ่านการประมวลผลภาพอัตโนมัติ เพื่อจัดเก็บ สรุป และประเมินผลการทำงานอย่างเป็นระบบ",
+  },
+] as const;
 
 export const caseStudy = {
   title: "My Schedule",
   subtitle: "รู้วิชา รู้ห้อง พร้อมไปเรียน",
   overview:
-    "เว็บไซต์เริ่มจาก Personal Pain Point ของเจ้าของโปรเจกต์ ต้องการใช้เองและแบ่งปันให้เพื่อน ความตั้งใจแชร์ไม่ใช่หลักฐานว่ามีผู้ใช้จริงจำนวนมาก",
+    "เว็บไซต์เริ่มจาก Personal Pain Point ของเจ้าของโปรเจกต์ ต้องการใช้เองและแบ่งปันให้เพื่อน โดยใช้การ์ดสำหรับอ่านทีละวันบนมือถือ และ Weekly Routing grid สำหรับเทียบทั้งสัปดาห์บน desktop ความตั้งใจแชร์ไม่ใช่หลักฐานว่ามีผู้ใช้จริงจำนวนมาก",
   problems: [
     "ตารางเดิมแสดงรหัสวิชาในช่องตาราง แต่แยกชื่อวิชาไว้ในรายการด้านล่าง",
     "ต้องจำรหัสหรือเลื่อนกลับไปเทียบชื่อ",
@@ -111,6 +184,10 @@ export const caseStudy = {
     {
       title: "Rationale",
       body: "Recognition over Recall — ช่วยให้เห็นข้อมูลที่ต้องใช้โดยไม่ต้องจำรหัสหรือเทียบคนละส่วน",
+    },
+    {
+      title: "Responsive Layout",
+      body: "มือถือใช้การ์ดและแถบเลือกวันเพื่ออ่านทีละวัน ส่วน desktop แสดง Weekly Routing grid เพื่อเทียบวันและช่วงเวลาของทั้งสัปดาห์",
     },
   ],
   roleAndAi: [

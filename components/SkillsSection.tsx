@@ -1,6 +1,25 @@
 import { skillGroups } from "@/content/portfolio";
 import SectionLabel from "@/components/SectionLabel";
 import Reveal from "@/components/Reveal";
+import TechIcon, { type TechIconName } from "@/components/TechIcon";
+
+const toolIcons: Record<string, TechIconName> = {
+  "Next.js": "nextjs",
+  React: "react",
+  "Tailwind CSS": "tailwindcss",
+  GSAP: "gsap",
+  NestJS: "nestjs",
+  "Node.js": "nodejs",
+  MongoDB: "mongodb",
+  SQLite: "sqlite",
+  Python: "python",
+  TypeScript: "typescript",
+  Kotlin: "kotlin",
+  "Android Development": "android",
+  Git: "git",
+  GitHub: "github",
+  Figma: "figma",
+};
 
 export default function SkillsSection() {
   return (
@@ -12,10 +31,10 @@ export default function SkillsSection() {
       <div className="mx-auto max-w-[1280px] px-5 py-10 md:px-12 md:py-14 lg:px-16">
         <Reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 border-t border-ink/15 pt-6">
           <div>
-            <SectionLabel index="02" title="Skills" />
+            <SectionLabel index="03" title="Skills" />
             <h2
               id="skills-heading"
-              className="mt-4 text-[clamp(2.8rem,5.25vw,5.5rem)] font-extrabold leading-[0.84] tracking-[-0.04em]"
+              className="mt-4 text-[clamp(2.8rem,5.25vw,5.5rem)] font-extrabold leading-[1.15]"
             >
               ทักษะ.
             </h2>
@@ -26,8 +45,8 @@ export default function SkillsSection() {
         </Reveal>
 
         <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-3">
-          {skillGroups.map((group) => (
-            <Reveal key={group.index} className="border-t-2 border-accent pt-4">
+          {skillGroups.map((group, position) => (
+            <Reveal key={group.index} delay={position * 0.08} className="border-t-2 border-accent pt-4">
               <p className="label-latin text-muted">{group.index}</p>
               <h3 className="mt-2 text-[clamp(1.25rem,1.7vw,1.6rem)] font-bold leading-tight">
                 {group.title}
@@ -39,9 +58,10 @@ export default function SkillsSection() {
                 {group.items.map((item) => (
                   <li
                     key={item}
-                    className="border-b border-ink/15 py-2 text-[16px]"
+                    className="flex items-center gap-3 border-b border-ink/15 py-2 text-[16px]"
                   >
-                    {item}
+                    {toolIcons[item] ? <TechIcon name={toolIcons[item]} /> : null}
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>

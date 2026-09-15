@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { caseStudy, project } from "@/content/portfolio";
-import { DetailCrop, FullScreenshot, imageCaptions } from "@/components/ProjectVisual";
+import WorkGallery from "@/components/WorkGallery";
+import { DetailCrop } from "@/components/ProjectVisual";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
@@ -33,7 +34,7 @@ function CaseSection({
           </p>
           <h2
             id={id}
-            className="mt-3 text-[clamp(1.9rem,3.4vw,3.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em]"
+            className="mt-3 text-[clamp(1.9rem,3.4vw,3.5rem)] font-extrabold leading-[1.15]"
           >
             {th}
           </h2>
@@ -60,7 +61,7 @@ export default function CaseStudyPage() {
               href="/#work"
               className="inline-flex min-h-[44px] items-center font-medium text-accent underline-offset-4 hover:underline"
             >
-              ← กลับไปหน้าผลงาน
+              <span aria-hidden="true" className="nudge-l">←</span> กลับไปหน้าผลงาน
             </Link>
           </nav>
 
@@ -71,7 +72,7 @@ export default function CaseStudyPage() {
             </p>
           </div>
 
-          <h1 className="display-case mt-6">
+          <h1 data-drift className="display-case mt-6">
             <span className="block">{caseStudy.title.split(" ")[0]}</span>
             <span className="block">
               {caseStudy.title.split(" ").slice(1).join(" ")}
@@ -79,7 +80,7 @@ export default function CaseStudyPage() {
           </h1>
 
           <div className="mt-6 grid grid-cols-1 gap-6 border-t border-ink/15 pt-6 lg:grid-cols-12 lg:gap-10">
-            <p className="text-[clamp(1.4rem,2.4vw,2.4rem)] font-bold leading-[1.05] tracking-[-0.03em] lg:col-span-8">
+            <p className="text-[clamp(1.4rem,2.4vw,2.4rem)] font-bold leading-[1.2] lg:col-span-8">
               {caseStudy.subtitle}
             </p>
             <div className="lg:col-span-4">
@@ -100,23 +101,7 @@ export default function CaseStudyPage() {
 
       <Reveal>
         <figure className="grid grid-cols-1 lg:grid-cols-12">
-          <div className="border border-ink/10 bg-surface p-4 md:p-6 lg:col-span-7">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-[minmax(0,42%)_1fr]">
-              <div>
-                <FullScreenshot />
-                <figcaption className="mt-3 text-sm text-muted">
-                  {imageCaptions.full}
-                </figcaption>
-              </div>
-              <div>
-                <DetailCrop which="dayNav" />
-                <p className="mt-3 text-sm text-muted">{imageCaptions.dayNav}</p>
-                <p className="mt-4 border-t border-ink/20 pt-3 text-sm text-muted">
-                  ภาพขยายทั้งสองเป็น crop จากหน้าจอเดียวกัน ไม่ใช่หน้าจอคนละอัน
-                </p>
-              </div>
-            </div>
-          </div>
+          <WorkGallery className="lg:col-span-7" />
 
           <div className="py-6 lg:col-span-5 lg:pl-8 lg:pt-2">
             <h2 className="label-latin text-muted uppercase">Overview</h2>
@@ -180,10 +165,12 @@ export default function CaseStudyPage() {
               </li>
             ))}
           </ol>
-          <figure className="mt-6 bg-surface p-4 md:p-5">
-            <DetailCrop which="cards" />
+          <figure data-wipe className="mt-6 border border-ink/10 bg-surface p-4 md:p-5">
+            <div className="max-w-[480px]">
+              <DetailCrop />
+            </div>
             <figcaption className="mt-3 text-sm text-muted">
-              {imageCaptions.cards}
+              {project.images.cards.caption}
             </figcaption>
           </figure>
         </CaseSection>
@@ -238,7 +225,7 @@ export default function CaseStudyPage() {
             href="/#work"
             className="press inline-flex min-h-[44px] items-center bg-ink px-6 font-medium text-background hover:bg-accent"
           >
-            ← กลับไปหน้าผลงาน
+            <span aria-hidden="true" className="nudge-l">←</span> กลับไปหน้าผลงาน
           </Link>
           <a
             href={project.repo}
