@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #f5f4ef;
+  --color-surface: #e6ebe4;
+  --color-ink: #242824;
+  --color-muted: #60685f;
+  --color-accent: #426b56;
+
+  --font-sans: "Archivo", "Noto Sans Thai", Helvetica, Arial, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-background);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--color-accent));
+  outline-offset: 3px;
+}
+
+/* Dark surfaces take a light ring: accent green is only 2.47:1 against ink. */
+.on-ink {
+  --focus-ring: var(--color-background);
+}
+
+/* Large Latin display type stays deliberately tighter than Thai body copy.
+   Bands follow the Light Swiss guideline: display 112–200px, section titles 56–96px on desktop. */
+.display-nam {
+  font-size: clamp(4.5rem, 15vw, 12.5rem);
+  line-height: 0.78;
+  letter-spacing: -0.07em;
+  font-weight: 800;
+}
+
+.display-section {
+  font-size: clamp(3.25rem, 7.5vw, 6rem);
+  line-height: 0.84;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+.display-project {
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+.display-case {
+  font-size: clamp(3.25rem, 7.5vw, 7.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.065em;
+  font-weight: 800;
+}
+
+.editorial-copy {
+  font-size: clamp(1.0625rem, 1.15vw, 1.25rem);
+  line-height: 1.65;
+}
+
+/* Small Latin eyebrow labels may use tracking; never applied to Thai paragraphs. */
+.label-latin {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+/* Skip link: hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-ink);
+  color: var(--color-background);
+  padding: 0.75rem 1.25rem;
+  transition: top 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline-color: var(--color-background);
+}
+
+/* Press + hover feedback: exact properties only, never `transition: all`. */
+.press {
+  transition-property: color, background-color, border-color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.press:active {
+  scale: 0.96;
+}
+
+/* Image outline: pure black on these light panels — a tinted neutral picks up the surface and reads as dirt. */
+.image-outline {
+  outline: 1px solid oklch(0 0 0 / 0.1);
+}
+
+/* Entrance state applies before first paint without touching the DOM, so nothing flashes visible and then hides.
+   Scoped to scripting-enabled + no motion preference so content is never hidden when it cannot be revealed. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* Fallback: if the GSAP chunk never loads, content appears instead of staying hidden. */
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .press:active {
+    scale: 1;
+  }
 }
