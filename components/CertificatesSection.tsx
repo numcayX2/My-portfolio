@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { certificates } from "@/content/portfolio";
 import SectionLabel from "@/components/SectionLabel";
 import Reveal from "@/components/Reveal";
@@ -44,7 +45,23 @@ export default function CertificatesSection() {
                   </p>
                 </div>
                 <div className="md:col-span-5 md:text-right">
-                  <p className="font-medium">{certificate.date}</p>
+                  <a
+                    href={certificate.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`เปิดดูใบรับรอง ${certificate.title} (PDF)`}
+                    className="image-outline group block overflow-hidden bg-background"
+                  >
+                    <Image
+                      src={certificate.preview}
+                      alt={certificate.previewAlt}
+                      width={927}
+                      height={655}
+                      sizes="(max-width: 767px) calc(100vw - 2.5rem), 440px"
+                      className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </a>
+                  <p className="mt-3 font-medium">{certificate.date}</p>
                   <a
                     href={certificate.href}
                     target="_blank"

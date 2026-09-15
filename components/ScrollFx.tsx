@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { loadGsap } from "@/lib/gsap";
 
 /** Everything the scroll system may hide before ScrollTrigger takes over.
  *  Each has an `.is-shown` escape hatch so a failed GSAP load can never strand content invisible. */
@@ -46,13 +47,11 @@ export default function ScrollFx() {
     let revert: (() => void) | undefined;
     let cancelled = false;
 
-    // Dynamic import: gsap/ScrollTrigger reads window at module scope, so a static import breaks prerendering.
+    // Shared singleton: one gsap/ScrollTrigger load and one registration for the whole page.
     (async () => {
       try {
-        const { default: gsap } = await import("gsap");
-        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        const { gsap, ScrollTrigger } = await loadGsap();
         if (cancelled) return;
-        gsap.registerPlugin(ScrollTrigger);
         const wide = window.matchMedia("(min-width: 1024px)").matches;
         // Hand the pre-paint state over to GSAP: this cancels the CSS failsafe in the same task,
         // before any repaint, so the hand-off is invisible.
@@ -78,19 +77,21 @@ export default function ScrollFx() {
             });
           });
 
-          // 3 / Image clip-wipes, scrubbed in both directions.
+          // 3 / Image reveals, scrubbed in both directions.
+          //    Scale + opacity only: the box never moves, so a mid-scrub frame
+          //    can't overlap its neighbours. (Clip-path would repaint every frame.)
           gsap.utils.toArray<HTMLElement>("[data-wipe]").forEach((el) => {
             gsap.fromTo(
               el,
-              { clipPath: "inset(14% 10% 14% 10%)" },
+              { scale: 0.97, opacity: 0 },
               {
-                clipPath: "inset(0% 0% 0% 0%)",
+                scale: 1,
+                opacity: 1,
                 ease: "power2.out",
                 scrollTrigger: { trigger: el, start: "top 92%", end: "top 55%", scrub: 0.5 },
               },
             );
           });
-
           // 4 / Counter-drift on the big Latin headings.
           gsap.utils.toArray<HTMLElement>("[data-drift]").forEach((el) => {
             gsap.fromTo(
@@ -141,11 +142,13 @@ export default function ScrollFx() {
                   0.1,
                 );
 
+              // Fade + inward scale: no x/y offset, so the translucent frame never crosses the next column.
               gsap.fromTo(
                 detail,
-                { clipPath: "inset(0 100% 0 0)" },
+                { scale: 0.94, opacity: 0 },
                 {
-                  clipPath: "inset(0 0% 0 0)",
+                  scale: 1,
+                  opacity: 1,
                   ease: "power3.inOut",
                   scrollTrigger: {
                     trigger: detail,
@@ -178,11 +181,13 @@ export default function ScrollFx() {
                 scrollTrigger: { trigger: workStage, start: "top 88%", end: "top 40%", scrub: 0.5 },
               },
             );
+            // Fade + inward scale: no x/y offset, so the translucent frame never crosses its neighbour.
             gsap.fromTo(
               detail,
-              { clipPath: "inset(0 100% 0 0)" },
+              { scale: 0.94, opacity: 0 },
               {
-                clipPath: "inset(0 0% 0 0)",
+                scale: 1,
+                opacity: 1,
                 ease: "power2.out",
                 scrollTrigger: { trigger: detail, start: "top 92%", end: "center center", scrub: 0.5 },
               },

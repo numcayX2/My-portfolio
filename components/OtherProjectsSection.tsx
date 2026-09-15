@@ -15,10 +15,10 @@ export default function OtherProjectsSection() {
               โปรเจกต์อื่น.
             </h2>
           </div>
-          <p className="label-latin pb-2 text-muted uppercase">Web · Mobile · Automation</p>
+          <p className="label-latin pb-2 text-muted uppercase">Web · Mobile</p>
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-x-10 md:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-x-10 md:grid-cols-2">
           {otherProjects.map((item, position) => (
             <Reveal
               key={item.name}

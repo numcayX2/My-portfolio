@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #f8f8f8;
-  --color-surface: #f8f8f8;
-  --color-ink: #1a1a1a;
-  --color-muted: #767676;
-  --color-accent: #ff4520;
+  --color-background: #f5f4ef;
+  --color-surface: #e4eadf;
+  --color-ink: #202620;
+  --color-muted: #596257;
+  --color-accent: #365c45;
   --color-boundary: #1f1f1f;
 
   --font-sans: "Archivo", "Noto Sans Thai", Helvetica, Arial, sans-serif;

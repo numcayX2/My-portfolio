@@ -23,7 +23,6 @@ function NavList({ compact = false }: { compact?: boolean }) {
 export default function SiteHeader() {
   return (
     <header
-      id="top"
       className="site-header sticky top-0 z-50 overflow-hidden border-b border-ink/15 bg-background"
     >
       <div id="scroll-progress" aria-hidden="true" className="scroll-progress" />

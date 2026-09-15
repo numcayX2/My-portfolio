@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { loadGsap } from "@/lib/gsap";
 
 /**
  * Scroll entrance for content below the fold.
@@ -28,14 +29,12 @@ export default function Reveal({
     const fallback = window.setTimeout(() => el.classList.add("is-revealed"), 2500);
     let revert: (() => void) | undefined;
     let cancelled = false;
-    // Dynamic import: gsap/ScrollTrigger อ่าน window ตอนโหลด module จึง import แบบ static ในไฟล์ที่ถูก prerender บน server ไม่ได้
+    // Shared singleton: one gsap/ScrollTrigger load and one registration for the whole page.
     (async () => {
       try {
-        const { default: gsap } = await import("gsap");
-        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        const { gsap } = await loadGsap();
         if (cancelled) return;
         window.clearTimeout(fallback);
-        gsap.registerPlugin(ScrollTrigger);
         // Cancels the CSS failsafe for this element; GSAP's own from-state takes over.
         el.classList.add("fx-ready");
         const ctx = gsap.context(() => {

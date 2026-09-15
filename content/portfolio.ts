@@ -37,6 +37,8 @@ export const certificates = [
     issuer: "YOU by True · Google Gemini",
     detail: "ผ่านการอบรมและสำเร็จหลักสูตร YOU by True & Gemini Academy",
     date: "15 กันยายน 2569",
+    preview: "/certificates/ai-literacy-preview.png",
+    previewAlt: "ภาพตัวอย่างใบรับรอง AI Literacy and Safety Modules มอบให้นายสุธารชัย ประดิษฐกูล",
     href: encodeURI(
       "/certificates/Certificate Al Literacy and Safety Modules _ ความรู้รอบด้าน AI และความปลอดภัย.pdf",
     ),
@@ -147,16 +149,7 @@ export const otherProjects = [
     summary:
       "แอปบันทึกข้อความพร้อมปักหมุดพิกัด เชื่อม GPS และ Location Services เพื่อเก็บ ค้นหา และจัดการข้อมูลแบบออฟไลน์ด้วยฐานข้อมูลภายในเครื่อง",
   },
-  {
-    index: "04",
-    name: "Python Automation & Data Tracking",
-    type: "Data Scripting & Process Automation",
-    role: "Developer",
-    tech: "Python · Computer Vision libraries",
-    summary:
-      "สคริปต์ตรวจจับเงื่อนไขและดึงสถานะเชิงสถิติผ่านการประมวลผลภาพอัตโนมัติ เพื่อจัดเก็บ สรุป และประเมินผลการทำงานอย่างเป็นระบบ",
-  },
-] as const;
+];
 
 export const caseStudy = {
   title: "My Schedule",
